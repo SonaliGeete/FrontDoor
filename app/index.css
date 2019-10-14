@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+.App {
+  width: 500px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.card-image-container
+{
+  position: relative;
+}
+.card-image-container *:not(img) {
+  position: absolute;
+}
+.card-image-container .card-title{
+  top: 50px;
+  font-size: 40px;
+  padding:24px;
+  line-height: 1.5;  
+  text-transform: capitalize;
+  color: #fff;
+}
+.card-image-container .published-on {
+  bottom: 24px;
+  left: 24px;
+  background-color: #f44336;
+  box-shadow: 0px 1px 4px #000;
+  color: #fff;
+  font-style: italic;
+  padding: 6px 8px;
+  border-radius: 3px;
+  font-size: 14px;
+}
+.collapse::after {
+  content:"+";
+  position: absolute;
+  text-align: center;
+  left: 15px;
+  top: 10px;
+}
+
+.p-hidden {
+  height: 69px;
+  overflow: hidden;
+}
+
+.collapse {
+  border-radius: 50%;
+  background-color: #f44336;
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  width:40px;
+  height:40px;
+  font-weight: bold;
+  font-size: 18px;
+  right: 24px;
+  bottom: -27px;
+  cursor: pointer;
+  position: absolute;
+  top: 313px;
+}
+.collapsed {
+  transform: rotate(45deg);
+}
+.description {
+  padding: 24px;
+  font-size: 16px;
+}
+
+.collapsed + .p-hidden {
+  height: auto;
+}
