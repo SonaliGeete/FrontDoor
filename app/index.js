@@ -1,52 +1,56 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import axios from 'axios';
+import parse from 'html-react-parser';
+
 
 class App extends React.Component {
-    constructor(props) {
+    constructor(props){
       super(props);
-  
-      this.state = {
+        this.state = {
         items: []
       };
-  
-    }
+    } 
+    
     collapse (e) {
-      if(e.target.classList.contains('collapsed')) {
+      if(e.target.classList.contains('collapsed')){
         e.target.classList.remove('collapsed');
-      } else if(!e.target.classList.contains('collapsed')) {
+      } else if(!e.target.classList.contains('collapsed')){
         e.target.classList.add('collapsed');
       }
     }
-    changeThis (item) {
-      return <p>{item.body.replace(/\n/g, "</p><p>")}</p>;
-    }
+   
     dateDiff (publishedDate) {
       var date = new Date(publishedDate);
       var milliseconds = date.getTime();
-  
       var date2 = new Date();
       var milliseconds2 = date2.getTime();
       var minus = milliseconds2 - milliseconds;
       return Math.round((minus / (1000 * 3600 * 24)));
     }
   
-    componentDidMount(){
-        fetch("https://my-json-server.typicode.com/journeymanavi/mock-json-api/posts")
-          .then(res => res.json())
-          .then(
-            (result) => {
-              this.setState({
-                items: result
-              });
-              // alert(result);
-            },
-            (error) => {
-              //error condition
-             
-            }
-          )
+    changeThis (item) {
+      var str = item.body;
+      var ar = str.split('\n');
+      var html = "";
+      for(var i =0; i<ar.length; i++){
+       html += '<p>'+ ar[i] + '</p>';
+      }
+      return html;
     }
+
+    componentDidMount(){   
+        axios.get(`https://my-json-server.typicode.com/journeymanavi/mock-json-api/posts`)
+        .then(res => {
+          const items = res.data;
+          this.setState({ items });    
+            console.log("success");//on success
+            }).catch((error)=>{
+              console.log("Error"); //on error
+            });
+    }
+
     render() {
      // console.log(this.state)
       return (
@@ -60,7 +64,7 @@ class App extends React.Component {
                 </div>
                 <div className="collapse" onClick={(e)=> this.collapse(e)}></div>
                 <div className="description p-hidden">
-                  {this.changeThis(item)}
+                {parse(this.changeThis(item))}
                 </div>
             </div>
           ))}
